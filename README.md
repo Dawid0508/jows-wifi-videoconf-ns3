@@ -81,7 +81,7 @@ chmod +x auto_run.sh
 
 ## ⚠️ Status prac (TODO)
 
-* [] **Zrobić badania dla 2.4 oraz 5 GHz:** 
+* [ ] **Zrobić badania dla 2.4 oraz 5 GHz:** 
 * [x] **Aktualizacja kodu .cc:** Wdrożono nowy atrybut `ChannelSettings` dla pasma i obsługę parametru `--band`.
 * [ ] **Badania 2.4 GHz:** DO ZROBIENIA. Przeprowadzenie pełnej iteracji skryptu `auto_run.sh` z ustawionym `BAND_VAL="2.4"`.
 * [ ] **Analiza końcowa:** Wygenerowanie wykresów z zebranych plików CSV i przygotowanie raportu podsumowującego.
