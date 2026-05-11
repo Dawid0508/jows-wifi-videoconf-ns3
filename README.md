@@ -30,7 +30,7 @@ Projekt opiera się na zasadzie "jeden plik źródłowy, pełna automatyzacja wy
 jows-wifi-videoconf-ns3/
 ├── wifi_videoconf_capacity.cc     # GŁÓWNY SKRYPT NS-3 (Kod w C++)
 ├── auto_run.sh                    # Skrypt bash automatyzujący pomiary w pętli
-├── rysuj_wykresy.py               # Skrypt Python do automatycznego generowania wykresów
+├── plot.py               # Skrypt Python do automatycznego generowania wykresów
 └── results/                       # Główny folder na wyniki
     ├── scenario_1_no_background/
     │   ├── 80211n_5GHz/           # Tutaj zapisuje się pojemnosc.csv i logi surowe
@@ -86,7 +86,7 @@ Skrypt połączy dane ze wszystkich plików CSV i wygeneruje wykresy `.png` do f
 
 * [x] **Aktualizacja kodu .cc:** Wdrożono nowy atrybut `ChannelSettings` dla pasma i obsługę parametru `--band`.
 * [x] **Skrypty analityczne:** Dodano skrypt `rysuj_wykresy.py` z automatycznym zaznaczaniem limitów QoS.
-* [x] **Zrobić badania dla 2.4 oraz 5 GHz:** Przeprowadzenie pełnych iteracji skryptu `auto_run.sh` z ustawionymi wartościami `BAND_VAL="2.4"` oraz `BAND_VAL="5.0"` (w trakcie realizacji).
+* [x] **Zrobić badania dla 2.4 oraz 5 GHz:** Przeprowadzenie pełnych iteracji skryptu `auto_run.sh` z ustawionymi wartościami `BAND_VAL="2.4"` oraz `BAND_VAL="5.0"`
 * [ ] **Analiza końcowa:** Skompletowanie wykresów z zebranych plików CSV i przygotowanie raportu podsumowującego.
 
 ```
