@@ -1,7 +1,3 @@
-Oto kompletny, zebrany w jedną całość plik **README.md**. Zawiera dokładnie wszystkie omówione punkty: opisy, scenariusze, pełną metodykę i szczegółową instrukcję krok po kroku.
-
-Skopiuj poniższy blok i wklej w całości do swojego pliku `README.md`:
-
 ```markdown
 # 📶 Porównanie pojemności sieci Wi-Fi dla usług wideokonferencji
 
@@ -33,14 +29,14 @@ Projekt opiera się na zasadzie "jeden plik źródłowy, pełna automatyzacja wy
 ```text
 jows-wifi-videoconf-ns3/
 ├── wifi_videoconf_capacity.cc     # GŁÓWNY SKRYPT NS-3 (Kod w C++)
-├── auto_run.sh                    # Główny skrypt automatyzujący pomiary w pętli
-└── results/                       # Główny folder na wyniki (tworzony automatycznie)
+├── auto_run.sh                    # Skrypt bash automatyzujący pomiary w pętli
+├── rysuj_wykresy.py               # Skrypt Python do automatycznego generowania wykresów
+└── results/                       # Główny folder na wyniki
     ├── scenario_1_no_background/
     │   ├── 80211n_5GHz/           # Tutaj zapisuje się pojemnosc.csv i logi surowe
-    │   ├── 80211ac_5GHz/
-    │   └── 80211ax_5GHz/
-    └── scenario_2_with_background/
-        └── ...
+    │   └── ...
+    ├── scenario_2_with_background/
+    └── wykresy/                   # Tutaj zapisywane są gotowe wykresy .png
 
 ```
 
@@ -51,9 +47,9 @@ jows-wifi-videoconf-ns3/
 * **Czasy testowe:** Do szybkiej weryfikacji działania skryptów i wykrywania błędów stosujemy krótki czas, np. `SIM_TIME=25` (co daje 5 sekund właściwego pomiaru).
 * **Czasy docelowe:** W celu uzyskania stabilnych i wiarygodnych statystyk końcowych rekomendowany czas wynosi `SIM_TIME=120`. Oznacza to 100 sekund czystej symulacji ruchu sieciowego po odliczeniu czasu na wygrzewanie.
 
-## 🚀 Instrukcja obsługi: Jak uruchomić pomiary?
+## 🚀 Instrukcja obsługi: Jak uruchomić pomiary i analizę?
 
-Wszystkie pomiary dla danego pasma (obejmujące oba scenariusze i wszystkie standardy) uruchamia się zaledwie jednym poleceniem dzięki skryptowi `auto_run.sh`.
+Wszystkie pomiary dla danego pasma uruchamia się jednym poleceniem, a następnie drugim generuje się wykresy.
 
 1. **Przygotowanie:** Upewnij się, że kod C++ został wcześniej skompilowany poleceniem `./ns3 build` w głównym folderze symulatora.
 2. **Konfiguracja testu:** Otwórz plik `auto_run.sh` i w sekcji **PANEL STEROWANIA** zmień parametry:
@@ -61,7 +57,7 @@ Wszystkie pomiary dla danego pasma (obejmujące oba scenariusze i wszystkie stan
 * `SIM_TIME` – ustaw na `120` dla pełnych pomiarów do projektu.
 
 
-3. **Uruchomienie:**
+3. **Uruchomienie pomiarów:**
 Będąc w terminalu w folderze ze skryptem, nadaj mu uprawnienia i uruchom:
 ```bash
 chmod +x auto_run.sh
@@ -70,21 +66,28 @@ chmod +x auto_run.sh
 ```
 
 
-4. **Automatyka procesu:** * Skrypt samodzielnie iteruje po scenariuszach i standardach (np. mądrze pomija standard `ac` dla pasma 2.4 GHz).
+4. **Automatyka procesu:** * Skrypt samodzielnie iteruje po scenariuszach i standardach (omijając standard `ac` dla pasma 2.4 GHz).
 * Automatycznie inkrementuje liczbę stacji o 5.
-* Natychmiast przerywa daną pętlę i przechodzi do kolejnego testu, gdy tylko zostaną przekroczone limity QoS (nasycenie sieci).
+* Natychmiast przerywa pętlę dla danego wariantu przy przekroczeniu limitów QoS (nasycenie sieci).
 
 
-5. **Analiza:** Wyniki zbierane są w postaci czytelnych tabel `.csv` w folderze `results/`.
+5. **Generowanie wykresów:** Po zebraniu wyników, uruchom skrypt analityczny:
+```bash
+python plot.py
+
+```
+
+
+Skrypt połączy dane ze wszystkich plików CSV i wygeneruje wykresy `.png` do folderu `results/wykresy/`.
 
 ---
 
 ## ⚠️ Status prac (TODO)
 
-* [ ] **Zrobić badania dla 2.4 oraz 5 GHz:** 
 * [x] **Aktualizacja kodu .cc:** Wdrożono nowy atrybut `ChannelSettings` dla pasma i obsługę parametru `--band`.
-* [ ] **Badania 2.4 GHz:** DO ZROBIENIA. Przeprowadzenie pełnej iteracji skryptu `auto_run.sh` z ustawionym `BAND_VAL="2.4"`.
-* [ ] **Analiza końcowa:** Wygenerowanie wykresów z zebranych plików CSV i przygotowanie raportu podsumowującego.
+* [x] **Skrypty analityczne:** Dodano skrypt `rysuj_wykresy.py` z automatycznym zaznaczaniem limitów QoS.
+* [x] **Zrobić badania dla 2.4 oraz 5 GHz:** Przeprowadzenie pełnych iteracji skryptu `auto_run.sh` z ustawionymi wartościami `BAND_VAL="2.4"` oraz `BAND_VAL="5.0"` (w trakcie realizacji).
+* [ ] **Analiza końcowa:** Skompletowanie wykresów z zebranych plików CSV i przygotowanie raportu podsumowującego.
 
 ```
 
